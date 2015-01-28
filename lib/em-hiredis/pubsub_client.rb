@@ -4,10 +4,11 @@ module EventMachine::Hiredis
 
     PING_CHANNEL = '__em-hiredis-ping'
 
-    def initialize(host='localhost', port='6379', password=nil, db=nil)
+    def initialize(parent, host='localhost', port='6379', password=nil, db=nil)
+      @parent = parent
       @subs, @psubs = [], []
       @pubsub_defs = Hash.new { |h,k| h[k] = [] }
-      super
+      super(host, sport, password, db)
     end
 
     def connect
@@ -139,6 +140,11 @@ module EventMachine::Hiredis
       subscribe(PING_CHANNEL).callback {
         unsubscribe(PING_CHANNEL)
       }
+    end
+
+    # Proxy for Client pubsub command
+    def pubsub(*args, &blk)
+      @parent.pubsub_command(*args, &blk)
     end
 
     private

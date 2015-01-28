@@ -87,8 +87,13 @@ module EventMachine::Hiredis
     #
     def pubsub
       @pubsub ||= begin
-        PubsubClient.new(@host, @port, @password, @db).connect
+        PubsubClient.new(self, @host, @port, @password, @db).connect
       end
+    end
+
+    # Proxy for the Redis pubsub command
+    def pubsub_command(*args, &blk)
+      method_missing(:pubsub, *args, &blk)
     end
 
     def subscribe(*channels)
