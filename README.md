@@ -1,5 +1,5 @@
 # em-hiredis
-
+## Note: This is to be used mainly as a dependency for the [Gilmour gem](https://github.com/adityagodbole/gilmour). This will be deprecated when [this pull request](https://github.com/mloughran/em-hiredis/pull/38) is merged.
 ## What
 
 A Redis client for EventMachine designed to be fast and simple.
