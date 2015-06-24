@@ -3,13 +3,13 @@ $:.push File.expand_path("../lib", __FILE__)
 require "em-hiredis/version"
 
 Gem::Specification.new do |s|
-  s.name        = "em-hiredis"
+  s.name        = "gilmour-em-hiredis"
   s.version     = EventMachine::Hiredis::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["Martyn Loughran"]
-  s.email       = ["me@mloughran.com"]
-  s.homepage    = "http://github.com/mloughran/em-hiredis"
-  s.summary     = %q{Eventmachine redis client}
+  s.authors     = ["Martyn Loughran", "Aditya Godbole"]
+  s.email       = ["aa@gdbl.me"]
+  s.homepage    = "http://github.com/adityagodbole/em-hiredis"
+  s.summary     = %q{Eventmachine redis client dependency for gilmour}
   s.description = %q{Eventmachine redis client using hiredis native parser}
 
   s.add_dependency 'eventmachine', '~> 1.0'
