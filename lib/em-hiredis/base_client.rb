@@ -210,8 +210,15 @@ module EventMachine::Hiredis
       deferred.callback { |result| yield(result) } if block_given?
 
       if @connected
-        @connection.send_command(sym, args)
-        @defs.push(deferred)
+        res = @connection.send_command(sym, args)
+        # @connected can be in a stale state. send_command will fail and return
+        # 0 (if EM pure_ruby implmentation is not used). In that case, queue up
+        # the command once to be retried on reconnection
+        if res && res.kind_of?(Numeric) && res == 0
+          @command_queue << [deferred, sym, args]
+        else
+          @defs.push(deferred)
+        end
       elsif @failed
         deferred.fail(Error.new("Redis connection in failed state"))
       else
