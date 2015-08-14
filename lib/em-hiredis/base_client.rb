@@ -210,8 +210,8 @@ module EventMachine::Hiredis
       deferred.callback { |result| yield(result) } if block_given?
 
       if @connected
-        res = @connection.send_command(sym, args)
         @defs.push(deferred)
+        res = @connection.send_command(sym, args)
         # @connected can be in a stale state. send_command will fail and return
         # 0 (if EM pure_ruby implmentation is not used). In that case, queue up
         # the command once to be retried on reconnection
